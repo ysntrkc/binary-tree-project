@@ -1,3 +1,3 @@
 # Binary Tree Project
 
-This is my binary tree project for my data structures coures. 
+This is the binary tree project for my data structures coures. 
