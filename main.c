@@ -142,8 +142,8 @@ int main() {
         strcpy(nodeFreqChar, strtok(NULL, ","));
 
         // With the atoi() function, I convert strings to integers.
-        nodeId = atoi(nodeIdChar);
-        nodeFreq = atoi(nodeFreqChar);
+        nodeId = strtol(nodeIdChar, (char**) NULL, 10);
+        nodeFreq = strtol(nodeFreqChar, (char**) NULL, 10);
 
         // If I reading the first line of the file, I have to create a root.
         if (lineCount == 0) {
@@ -176,8 +176,8 @@ int main() {
         strcpy(nodeWord, strtok(NULL, ","));
         strcpy(nodeFreqChar, strtok(NULL, ","));
 
-        nodeId = atoi(nodeIdChar);
-        nodeFreq = atoi(nodeFreqChar);
+        nodeId = strtol(nodeIdChar, (char**) NULL, 10);
+        nodeFreq = strtol(nodeFreqChar, (char**) NULL, 10);
 
         nodeArr[i] = *createNode(nodeId, nodeWord, nodeFreq);
     }
