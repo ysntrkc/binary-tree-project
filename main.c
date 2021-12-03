@@ -13,18 +13,18 @@ typedef struct node {
     int number;
     char word[20];
     int frequency;
-    struct node *left;      // This one for left child of the tree.
-    struct node *right;     // This one for right child of the tree.
+    struct node *left;   // This one for left child of the tree.
+    struct node *right;  // This one for right child of the tree.
 } node;
 
 // This function creates the nodes one by one with the given id, word and freq.
 struct node *createNode(int id, char *word, int freq) {
     struct node *newNode;
-    newNode = malloc(sizeof(struct node));      // Here, I allocate the memory for the new node.
+    newNode = malloc(sizeof(struct node));  // Here, I allocate the memory for the new node.
     newNode->number = id;
     strcpy(newNode->word, word);
     newNode->frequency = freq;
-    newNode->left = newNode->right = NULL;      // At first, when I create a new node it's left and right nodes are NULL.
+    newNode->left = newNode->right = NULL;  // At first, when I create a new node it's left and right nodes are NULL.
     return newNode;
 }
 
@@ -34,7 +34,7 @@ struct node *insertToWordBST(struct node *currentNode, int id, char *word, int f
     if (currentNode == NULL) {
         return createNode(id, word, freq);
     }
-        // If the current node is not empty, I compare the words and send the node to the right or left.
+    // If the current node is not empty, I compare the words and send the node to the right or left.
     else if (stricmp(word, currentNode->word) < 0) {
         currentNode->left = insertToWordBST(currentNode->left, id, word, freq);
     } else if (stricmp(word, currentNode->word) >= 0) {
@@ -109,7 +109,6 @@ void totalAccessTime(struct node *currentNode, int depth) {
     }
 }
 
-
 int main() {
     int nodeId;
     int nodeFreq;
@@ -131,25 +130,23 @@ int main() {
         printf("File couldn't be opened!\n");
         return 1;
     }
-
     // If there is no problem, the program starts to read the file and insert the nodes into the tree.
     // If there is a line to read, the program reads it and assigns the line variable.
     while (fgets(line, sizeof(line), filePtr)) {
-
         // With strtok() function, I split the 'line' from semicolons and copy them to given string variables.
         strcpy(nodeIdChar, strtok(line, ","));
         strcpy(nodeWord, strtok(NULL, ","));
         strcpy(nodeFreqChar, strtok(NULL, ","));
 
         // With the atoi() function, I convert strings to integers.
-        nodeId = strtol(nodeIdChar, (char**) NULL, 10);
-        nodeFreq = strtol(nodeFreqChar, (char**) NULL, 10);
+        nodeId = strtol(nodeIdChar, (char **)NULL, 10);
+        nodeFreq = strtol(nodeFreqChar, (char **)NULL, 10);
 
         // If I reading the first line of the file, I have to create a root.
         if (lineCount == 0) {
             wordOrderedBST = createNode(nodeId, nodeWord, nodeFreq);
         }
-            // If I reading the other lines, I insert the nodes to root for build a binary search tree.
+        // If I reading the other lines, I insert the nodes to root for build a binary search tree.
         else {
             insertToWordBST(wordOrderedBST, nodeId, nodeWord, nodeFreq);
         }
@@ -176,8 +173,8 @@ int main() {
         strcpy(nodeWord, strtok(NULL, ","));
         strcpy(nodeFreqChar, strtok(NULL, ","));
 
-        nodeId = strtol(nodeIdChar, (char**) NULL, 10);
-        nodeFreq = strtol(nodeFreqChar, (char**) NULL, 10);
+        nodeId = strtol(nodeIdChar, (char **)NULL, 10);
+        nodeFreq = strtol(nodeFreqChar, (char **)NULL, 10);
 
         nodeArr[i] = *createNode(nodeId, nodeWord, nodeFreq);
     }
@@ -204,8 +201,9 @@ int main() {
 
     // This part of the program is for user experience.
     // Firstly, I ask to the user to use which tree.
-    printf("Which tree do you want to use?\n\tType 1 for word ordered binary search tree."
-           "\n\tType 2 for level ordered binary tree.\n?");
+    printf(
+        "Which tree do you want to use?\n\tType 1 for word ordered binary search tree."
+        "\n\tType 2 for level ordered binary tree.\n?");
     scanf("%d", &choice1);
 
     // There is only two options. So if user entered any other option, the program prints an error message and exits.
@@ -215,9 +213,10 @@ int main() {
     }
 
     // Second, I ask to the user to do what with the selected tree.
-    printf("What do you want to print?\n\tType 1 for pre-order traversal (NLR)"
-           "\n\tType 2 for post-order traversal (LRN)\n\tType 3 for in order traversal (LNR)"
-           "\n\tType 4 for reverse in order traversal (RNL)\n\tType 5 for calculate the total access time.\n?");
+    printf(
+        "What do you want to print?\n\tType 1 for pre-order traversal (NLR)"
+        "\n\tType 2 for post-order traversal (LRN)\n\tType 3 for in order traversal (LNR)"
+        "\n\tType 4 for reverse in order traversal (RNL)\n\tType 5 for calculate the total access time.\n?");
     scanf("%d", &choice2);
 
     // There is only five options. So if user entered any other option, the program prints an error message and exits.
@@ -228,19 +227,27 @@ int main() {
 
     // Finally, the program do whatever user wants and print it to the console.
     if (choice1 == 1) {
-        if (choice2 == 1) printPreOrderNLR(wordOrderedBST);
-        else if (choice2 == 2) printPostOrderLRN(wordOrderedBST);
-        else if (choice2 == 3) printInOrderLNR(wordOrderedBST);
-        else if (choice2 == 4) printReverseInorderRNL(wordOrderedBST);
+        if (choice2 == 1)
+            printPreOrderNLR(wordOrderedBST);
+        else if (choice2 == 2)
+            printPostOrderLRN(wordOrderedBST);
+        else if (choice2 == 3)
+            printInOrderLNR(wordOrderedBST);
+        else if (choice2 == 4)
+            printReverseInorderRNL(wordOrderedBST);
         else if (choice2 == 5) {
             totalAccessTime(wordOrderedBST, 0);
             printf("Total access time: %ld", totalAccTime);
         }
     } else if (choice1 == 2) {
-        if (choice2 == 1) printPreOrderNLR(freqOrderBT);
-        else if (choice2 == 2) printPostOrderLRN(freqOrderBT);
-        else if (choice2 == 3) printInOrderLNR(freqOrderBT);
-        else if (choice2 == 4) printReverseInorderRNL(freqOrderBT);
+        if (choice2 == 1)
+            printPreOrderNLR(freqOrderBT);
+        else if (choice2 == 2)
+            printPostOrderLRN(freqOrderBT);
+        else if (choice2 == 3)
+            printInOrderLNR(freqOrderBT);
+        else if (choice2 == 4)
+            printReverseInorderRNL(freqOrderBT);
         else if (choice2 == 5) {
             totalAccessTime(freqOrderBT, 0);
             printf("Total access time: %ld", totalAccTime);
